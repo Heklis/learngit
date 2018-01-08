@@ -17,7 +17,6 @@ class Client(threading.Thread):
     def __init__(self, window):
         super(Client, self).__init__()
         self.window = window
-        self.eevent()
 
     def run(self):
         self.do_something()
@@ -32,14 +31,12 @@ class Client(threading.Thread):
         ssl_sock.close()  
 
     def sendMessage(self):
-        data = self.window.inputBox.toPlainText()
+        data = self.window.inputBox.text()
         if not data:
             return
         ssl_sock.send(data)
-        self.window.displayBox.palette().setColor(QPalette::Active,
-                QPalette::Base, Qt::red)
+        #self.window.displayBox.palette().setColor(QPalette::Active,
+        #        QPalette::Base, Qt::red)
         self.window.displayBox.append(data)
         self.window.inputBox.setText('')
 
-    def eevent(self):
-        self.window.pushButton.clicked.connect(self.sendMessage)
